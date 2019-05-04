@@ -454,6 +454,20 @@ io.on('connection', function (socket) {
     socket.on('2', function(virusCell) {
         function splitCell(cell) {
             if(cell && cell.mass && cell.mass >= c.defaultPlayerMass*2) {
+                cell.mass = cell.mass/2;
+                cell.radius = util.massToRadius(cell.mass);
+                currentPlayer.cells.push({
+                    mass: cell.mass,
+                    x: cell.x,
+                    y: cell.y,
+                    radius: cell.radius,
+                    speed: 25
+                });
+            }
+        }
+
+        function virusSplitCell(cell) {
+            if(cell && cell.mass && cell.mass >= c.defaultPlayerMass*2) {
                 cell.mass = cell.mass / c.virus.splitCellInto;
                 cell.radius = util.massToRadius(cell.mass);
                 for (var i = 1; i <= c.virus.splitCellInto; i++) {   // split into many cells.
@@ -471,8 +485,8 @@ io.on('connection', function (socket) {
 
         if(currentPlayer.cells.length < c.limitSplit && currentPlayer.massTotal >= c.defaultPlayerMass*2) {
             //Split single cell from virus
-            if(virusCell) {
-              splitCell(currentPlayer.cells[virusCell]);
+            if(virusCell != undefined) {
+              virusSplitCell(currentPlayer.cells[virusCell]);
             }
             else {
               //Split all cells
