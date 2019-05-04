@@ -454,9 +454,9 @@ io.on('connection', function (socket) {
     socket.on('2', function(virusCell) {
         function splitCell(cell) {
             if(cell && cell.mass && cell.mass >= c.defaultPlayerMass*2) {
-                cell.mass = cell.mass/6;
+                cell.mass = cell.mass / c.virus.splitCellInto;
                 cell.radius = util.massToRadius(cell.mass);
-                for (var i = 0; i < 5; i++) {   // split into 6 cells.
+                for (var i = 1; i <= c.virus.splitCellInto; i++) {   // split into many cells.
                     currentPlayer.cells.push({
                         mass: cell.mass,
                         x: cell.x,
@@ -465,7 +465,7 @@ io.on('connection', function (socket) {
                         speed: 25
                     });
                 }
-                cell.mass += c.virus.splitMass / 2; // Add some mass for main cell when split.
+                cell.mass += c.defaultPlayerMass ; // Add some mass for main cell when split.
             }
         }
 

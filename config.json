@@ -14,6 +14,7 @@
             "from": 100,
             "to": 150
         },
+        "splitCellInto": 6,
         "splitMass": 180
     },
     "gameWidth": 5000,
